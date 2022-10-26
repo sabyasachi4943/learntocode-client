@@ -1,12 +1,27 @@
-import React from "react";
+import { GoogleAuthProvider } from "firebase/auth";
+import React, { useContext } from "react";
 import { Button, ButtonGroup, ListGroup } from "react-bootstrap";
 import { FaGoogle, FaGithub, FaEnvelope, FaTwitter, FaFacebook, FaWhatsapp, FaTwitch } from "react-icons/fa";
+import { AuthContext } from "../../../contexts/AuthProvider/AuthProvider";
 
 const RightSideNav = () => {
+  
+  const {providerLogin} = useContext(AuthContext)
+  
+  const googleProvider = new GoogleAuthProvider()
+
+  const handleGoogleSignIn = () => {
+    providerLogin(googleProvider)
+      .then(result => {
+        const user = result.user;
+        console.log(user)
+      })
+      .catch(error => console.error(error));
+  }
   return (
     <div>
       <ButtonGroup vertical>
-        <Button className="mb-2" variant="outline-primary">
+        <Button onClick={handleGoogleSignIn} className="mb-2" variant="outline-primary">
           <FaGoogle></FaGoogle> Login with Google
         </Button>
         <Button className="mb-2" variant="outline-dark">
