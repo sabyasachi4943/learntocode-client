@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import Main from "../../layout/Main";
+import Blog from "../../Pages/Blog/Blog";
 import Category from "../../Pages/Category/Category/Category";
 import FAQ from "../../Pages/FAQ/FAQ";
 import Home from "../../Pages/Home/Home";
@@ -27,7 +28,7 @@ export const routes = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/topics/${params.id}`),
+          fetch(`https://learntocode-server.vercel.app/topics/${params.id}`),
       },
       {
         path: "/topics",
@@ -55,11 +56,12 @@ export const routes = createBrowserRouter([
       },
       {
         path: "/faq",
-        element: <FAQ></FAQ>
+        element: <FAQ></FAQ>,
       },
       {
-        path: "/blog"
-      }
+        path: "/blog",
+        element: <Blog></Blog>,
+      },
     ],
   },
 ]);

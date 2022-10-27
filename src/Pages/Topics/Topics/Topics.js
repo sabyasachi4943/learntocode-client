@@ -6,7 +6,7 @@ const Topics = () => {
     const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/topics")
+    fetch("https://learntocode-server.vercel.app/topics")
       .then((res) => res.json())
       .then((data) => setCategories(data));
   }, []);
