@@ -9,7 +9,8 @@ const Register = () => {
 
   const [error, setError] = useState('');
   const [accepted, setAccepted] = useState(false)
-  const { createUser } = useContext(AuthContext);
+  const { createUser, updateUserProfile, verifyEmail } =
+    useContext(AuthContext);
 
 
   const handleSubmit = event => {
@@ -27,11 +28,29 @@ const Register = () => {
         console.log(user);
         setError('');
         form.reset();
+        handleUpdateUserProfile(name, photoURL);
+        handleEmailVerification();
       })
       .catch((e) => {
         console.error(e)
         setError(e.message);
       });
+  }
+
+  const handleUpdateUserProfile = (name, photoURL) => {
+    const profile = {
+      displayName: name,
+      photoURL: photoURL
+    }
+    updateUserProfile(profile)
+      .then(() => { })
+      .catch(error => console.error(error))
+  }
+
+  const handleEmailVerification = () => {
+    verifyEmail()
+      .then(() => { })
+      .catch(error => console.error(error));
   }
 
   const handleAccepted = event => {
