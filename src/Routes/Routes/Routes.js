@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import Main from "../../layout/Main";
 import Category from "../../Pages/Category/Category/Category";
+import FAQ from "../../Pages/FAQ/FAQ";
 import Home from "../../Pages/Home/Home";
 import Login from "../../Pages/Login/Login/Login";
 import Register from "../../Pages/Login/Register/Register";
@@ -29,7 +30,7 @@ export const routes = createBrowserRouter([
           fetch(`http://localhost:5000/topics/${params.id}`),
       },
       {
-        path: "/topics/:id",
+        path: "/topics",
         element: <Topics></Topics>,
       },
       {
@@ -42,11 +43,22 @@ export const routes = createBrowserRouter([
       },
       {
         path: "/terms",
-        element: <TermsAndConditions></TermsAndConditions>
+        element: <TermsAndConditions></TermsAndConditions>,
       },
       {
         path: "/profile",
-        element: <PrivateRoute><Profile></Profile></PrivateRoute>
+        element: (
+          <PrivateRoute>
+            <Profile></Profile>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/faq",
+        element: <FAQ></FAQ>
+      },
+      {
+        path: "/blog"
       }
     ],
   },

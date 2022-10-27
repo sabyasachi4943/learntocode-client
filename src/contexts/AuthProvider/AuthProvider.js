@@ -24,6 +24,8 @@ const AuthProvider = ({ children }) => {
     return signInWithPopup(auth, provider);
   };
 
+
+
   const createUser = (email, password) => {
     setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
@@ -50,7 +52,7 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       console.log("inside auth state change", currentUser);
-      if (currentUser === null || currentUser.emailVerified) {
+      if (currentUser === null || currentUser.emailVerified || currentUser.uid) {
         setUser(currentUser);
       }
       setLoading(false);
