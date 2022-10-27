@@ -1,19 +1,18 @@
-import React, { useState } from 'react';
-import { useContext } from 'react';
+import React, { useState } from "react";
+import { useContext } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { Link } from 'react-router-dom';
-import { AuthContext } from '../../../contexts/AuthProvider/AuthProvider';
+import { Link } from "react-router-dom";
+import { AuthContext } from "../../../contexts/AuthProvider/AuthProvider";
+import toast from "react-hot-toast";
 
 const Register = () => {
-
-  const [error, setError] = useState('');
-  const [accepted, setAccepted] = useState(false)
+  const [error, setError] = useState("");
+  const [accepted, setAccepted] = useState(false);
   const { createUser, updateUserProfile, verifyEmail } =
     useContext(AuthContext);
 
-
-  const handleSubmit = event => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     const form = event.target;
     const name = form.name.value;
@@ -26,36 +25,37 @@ const Register = () => {
       .then((result) => {
         const user = result.user;
         console.log(user);
-        setError('');
+        setError("");
         form.reset();
         handleUpdateUserProfile(name, photoURL);
         handleEmailVerification();
+        toast.success("Please verify your email address.");
       })
       .catch((e) => {
-        console.error(e)
+        console.error(e);
         setError(e.message);
       });
-  }
+  };
 
   const handleUpdateUserProfile = (name, photoURL) => {
     const profile = {
       displayName: name,
-      photoURL: photoURL
-    }
+      photoURL: photoURL,
+    };
     updateUserProfile(profile)
-      .then(() => { })
-      .catch(error => console.error(error))
-  }
+      .then(() => {})
+      .catch((error) => console.error(error));
+  };
 
   const handleEmailVerification = () => {
     verifyEmail()
-      .then(() => { })
-      .catch(error => console.error(error));
-  }
+      .then(() => {})
+      .catch((error) => console.error(error));
+  };
 
-  const handleAccepted = event => {
-    setAccepted(event.target.checked)
-  }
+  const handleAccepted = (event) => {
+    setAccepted(event.target.checked);
+  };
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -90,7 +90,7 @@ const Register = () => {
       <Form.Group className="mb-3" controlId="formBasicCheckbox">
         <Form.Check
           type="checkbox"
-          onClick = {handleAccepted}
+          onClick={handleAccepted}
           label={
             <>
               Accept <Link to="/terms">Terms and Conditions</Link>

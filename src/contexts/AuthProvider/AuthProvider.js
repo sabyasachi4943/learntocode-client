@@ -36,11 +36,11 @@ const AuthProvider = ({ children }) => {
 
   const updateUserProfile = (profile) => {
     return updateProfile(auth.currentUser, profile);
-  }
+  };
 
   const verifyEmail = () => {
     return sendEmailVerification(auth.currentUser);
-  }
+  };
 
   const logOut = () => {
     setLoading(true);
@@ -50,7 +50,9 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       console.log("inside auth state change", currentUser);
-      setUser(currentUser);
+      if (currentUser === null || currentUser.emailVerified) {
+        setUser(currentUser);
+      }
       setLoading(false);
     });
 
@@ -59,7 +61,17 @@ const AuthProvider = ({ children }) => {
     };
   }, []);
 
-  const authInfo = { user, loading, verifyEmail, updateUserProfile, providerLogin, logOut, createUser, signIn };
+  const authInfo = {
+    user,
+    loading,
+    setLoading,
+    verifyEmail,
+    updateUserProfile,
+    providerLogin,
+    logOut,
+    createUser,
+    signIn,
+  };
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
   );
