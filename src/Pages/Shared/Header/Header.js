@@ -8,6 +8,12 @@ import { FaCommentsDollar, FaUser } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../contexts/AuthProvider/AuthProvider";
 import LeftSideNav from "../LeftSideNav/LeftSideNav";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
+import ToggleButton from "react-bootstrap/ToggleButton";
+import { useState } from "react";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Tooltip from "react-bootstrap/Tooltip";
+
 
 const Header = () => {
   const { user, logOut } = useContext(AuthContext);
@@ -17,6 +23,13 @@ const Header = () => {
       .then(() => {})
       .catch((error) => FaCommentsDollar.error(error));
   };
+
+  const [radioValue, setRadioValue] = useState("1");
+
+  const radios = [
+    { name: "Dark", value: "1" },
+    { name: "Light", value: "2" },
+  ];
 
   return (
     <div>
@@ -28,45 +41,80 @@ const Header = () => {
         variant="light"
       >
         <Container>
-          <Navbar.Brand>
+          <Navbar.Brand className=" text-decoration-none">
             <Link to="/">LearnToCode</Link>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
-              <Button variant="light">
+              <Button variant="light" className="me-3">
                 <Link to="/topics">Courses</Link>
               </Button>
-              <Button variant="light">
+              <Button variant="light" className="me-3">
                 <Link to="/faq">FAQ</Link>
               </Button>
-              <Button variant="light">
+              <Button variant="light" className="me-3">
                 <Link to="/blog">Blog</Link>
               </Button>
             </Nav>
             <Nav>
               <>
+                <ButtonGroup className="mb-2 me-3 border border-dark">
+                  {radios.map((radio, idx) => (
+                    <ToggleButton
+                      key={idx}
+                      id={`radio-${idx}`}
+                      type="radio"
+                      variant="light"
+                      name="radio"
+                      value={radio.value}
+                      checked={radioValue === radio.value}
+                      onChange={(e) => setRadioValue(e.currentTarget.value)}
+                    >
+                      {radio.name}
+                    </ToggleButton>
+                  ))}
+                </ButtonGroup>
+              </>
+              <>
                 {user?.uid ? (
                   <>
-                    <span>{user?.displayName}</span>
-                    <Button variant="light" onClick={handleLogOut}>
-                      LogOut
-                    </Button>
+                    <div>
+                      <span>{user?.displayName}</span>
+                      <Button variant="light" onClick={handleLogOut}>
+                        LogOut
+                      </Button>
+                    </div>
                   </>
                 ) : (
                   <>
-                    <Link to="/login">Login</Link>
-                    <Link to="/register">Register</Link>
+                    <Button variant="light" className="me-3">
+                      <Link to="/login">Login</Link>
+                    </Button>
+                    <Button variant="light" className="me-3">
+                      <Link to="/register">Register</Link>
+                    </Button>
                   </>
                 )}
               </>
               <Link to="/profile">
                 {user?.photoURL ? (
-                  <Image
-                    style={{ height: "40px" }}
-                    roundedCircle
-                    src={user.photoURL}
-                  ></Image>
+                  <>
+                    <OverlayTrigger
+                      placement="bottom"
+                      overlay={
+                        <Tooltip id={`tooltip-bottom`}>
+                          <span>{user?.displayName}</span>.
+                        </Tooltip>
+                      }
+                    >
+                      <Image
+                        style={{ height: "40px" }}
+                        roundedCircle
+                        src={user.photoURL}
+                      ></Image>
+                    </OverlayTrigger>
+                  </>
                 ) : (
                   <FaUser></FaUser>
                 )}
