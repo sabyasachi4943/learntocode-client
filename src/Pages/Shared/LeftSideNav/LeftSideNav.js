@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import Table from "react-bootstrap/Table";
 
 const LeftSideNav = () => {
   const [categories, setCategories] = useState([]);
@@ -13,15 +14,20 @@ const LeftSideNav = () => {
   return (
     <div>
       <h4>All categories : {categories.length}</h4>
-      <div>
-        {
-          categories.map(category => <p key={category.id}>
-            <Link to={`/category/${category.id}`}>{ category.name }</Link>
-          </p>)
-        }
-      </div>
+      <Table bordered hover>
+        <tbody>
+          {categories.map((category) => (
+            <tr key={category.id}>
+              <td>
+                <Link to={`/category/${category.id}`}>{category.name}</Link>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+      <div></div>
     </div>
-  ); 
+  );
 };
 
 export default LeftSideNav;

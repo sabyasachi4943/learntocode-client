@@ -41,21 +41,34 @@ const Header = () => {
         variant="light"
       >
         <Container>
-          <Navbar.Brand className=" text-decoration-none">
-            <Link to="/">LearnToCode</Link>
+          <Navbar.Brand>
+            <Link to="/" className="text-decoration-none">
+              LearnToCode
+            </Link>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
-              <Button variant="light" className="me-3">
-                <Link to="/topics">Courses</Link>
-              </Button>
-              <Button variant="light" className="me-3">
-                <Link to="/faq">FAQ</Link>
-              </Button>
-              <Button variant="light" className="me-3">
-                <Link to="/blog">Blog</Link>
-              </Button>
+              <p variant="light" className="m-3">
+                <Link to="/topics" className="text-decoration-none">
+                  Courses
+                </Link>
+              </p>
+              <p variant="light" className="m-3">
+                <Link to="/faq" className="text-decoration-none">
+                  FAQ
+                </Link>
+              </p>
+              <p variant="light" className="m-3">
+                <Link to="/blog" className="text-decoration-none">
+                  Blog
+                </Link>
+              </p>
+              <p variant="light" className="m-3">
+                <Link to="/orders" className="text-decoration-none">
+                  Orders
+                </Link>
+              </p>
             </Nav>
             <Nav>
               <>
